@@ -34,6 +34,7 @@ do
     end)
 end
 -- }}}
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 -- The default is a dark theme
@@ -62,6 +63,7 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
+    awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
@@ -72,8 +74,7 @@ layouts =
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.floating
+    awful.layout.suit.magnifier
 }
 -- }}}
 
@@ -83,16 +84,13 @@ use_titlebar = false
 -- }}}
 
 -- {{{ Tags
--- Define tags table.
+-- Define a tag table which hold all screen tags.
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "sys", "mail", "cal", "w1", "w2", "w3", "com", "web", "w4" }, s, awful.layout.suit.max)
-    -- I'm sure you want to see at least one tag.
-    tags[s][1].selected = true
+    tags[s] = awful.tag({ "sys", "mail", "cal", "w1", "w2", "w3", "com", "web", "w4" }, s, layouts[1])
 end
 -- }}}
-
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
@@ -114,12 +112,12 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- }}}
 
 -- {{{ Wibox
-
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
+
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -139,13 +137,13 @@ mytasklist.buttons = awful.util.table.join(
                                               if c == client.focus then
                                                   c.minimized = true
                                               else
-                                              if not c:isvisible() then
-                                                  awful.tag.viewonly(c:tags()[1])
-                                              end
+                                                  if not c:isvisible() then
+                                                      awful.tag.viewonly(c:tags()[1])
+                                                  end
                                                   -- This will also un-minimize
                                                   -- the client, if needed
-                                              client.focus = c
-                                              c:raise()
+                                                  client.focus = c
+                                                  c:raise()
                                               end
                                           end),
                      awful.button({ }, 3, function ()
@@ -203,7 +201,6 @@ for s = 1, screen.count() do
 end
 -- }}}
 
-
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -228,13 +225,13 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
---    awful.key({ modkey,           }, "w", function () mymainmenu:show(true)        end),
+    awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
 
     -- Layout manipulation
-    awful.key({ modkey, "Shift"   }, "f", function () awful.client.swap.byidx(  1) end),
-    awful.key({ modkey, "Shift"   }, "b", function () awful.client.swap.byidx( -1) end),
-    awful.key({ modkey, "Control" }, "f", function () awful.screen.focus( 1)       end),
-    awful.key({ modkey, "Control" }, "b", function () awful.screen.focus(-1)       end),
+    awful.key({ modkey, "Shift"   }, "f", function () awful.client.swap.byidx(  1)    end),
+    awful.key({ modkey, "Shift"   }, "b", function () awful.client.swap.byidx( -1)    end),
+    awful.key({ modkey, "Control" }, "f", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey, "Control" }, "b", function () awful.screen.focus_relative(-1) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
     awful.key({ modkey,           }, "Tab",
         function ()
@@ -371,7 +368,6 @@ clientbuttons = awful.util.table.join(
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize))
 
-
 -- Set keys
 root.keys(globalkeys)
 -- }}}
@@ -382,6 +378,7 @@ root.keys(globalkeys)
 --    x-terminal-emulator -name mocp -e mocp
 
 awful.rules.rules = {
+    -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
@@ -389,8 +386,9 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
-        properties = { floating = true }
-    },
+      properties = { floating = true } },
+    { rule = { class = "pinentry" },
+      properties = { floating = true } },
     { rule = { class = "gimp" },
         properties = { floating = true }
     },
