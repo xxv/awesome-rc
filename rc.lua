@@ -361,8 +361,6 @@ bindtagkey("a", 7)
 bindtagkey("o", 8)
 bindtagkey("e", 9)
 
--- load up the other daemons
-awful.util.spawn("/home/steve/bin/awesome3_start")
 
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
