@@ -1,4 +1,3 @@
-print("read steve's config")
 -- Standard awesome library
 require("awful")
 require("awful.autofocus")
@@ -287,14 +286,13 @@ globalkeys = awful.util.table.join(
 
 )
 
--- Client awful tagging: this is useful to tag some clients and then do stuff like move to tag on them
+-- Steve's key bindings
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "x",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "x",      awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
     -- ? awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
-    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey, },            "t",      awful.client.togglemarked),
     awful.key({ modkey,},            "m",
         function (c)
