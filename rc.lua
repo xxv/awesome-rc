@@ -93,6 +93,17 @@ for s = 1, screen.count() do
 end
 -- }}}
 
+
+-- Override awesome.quit when we're using GNOME
+_awesome_quit = awesome.quit
+awesome.quit = function()
+    if os.getenv("DESKTOP_SESSION") == "gnome-awesome" then
+       os.execute("/usr/bin/gnome-session-quit")
+    else
+    _awesome_quit()
+    end
+end
+
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
@@ -414,6 +425,9 @@ if wid then
           "-set _NET_SYSTEM_TRAY_COLORS " ..
           "65535,65535,65535,65535,8670,8670,65535,32385,0,8670,65535,8670")
 end
+
+-- Needed for Java, due to really stupid reasons.
+os.execute("wmname LG3D")
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
