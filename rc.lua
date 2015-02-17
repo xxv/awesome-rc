@@ -174,6 +174,13 @@ mytasklist.buttons = awful.util.table.join(
                                               awful.client.focus.byidx(-1)
                                               if client.focus then client.focus:raise() end
                                           end))
+hearts = widget({ type = "textbox" })
+hearts.text = ""
+mytimer = timer({ timeout = 10 })
+mytimer:add_signal("timeout", function()
+    awful.util.spawn('/home/steve/bin/awesome-hearts')
+end)
+mytimer:start()
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
@@ -206,6 +213,7 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+        hearts,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
