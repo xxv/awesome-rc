@@ -436,6 +436,8 @@ end
 
 -- Needed for Java, due to really stupid reasons.
 os.execute("wmname LG3D")
+-- Because Gnome stopped doing it for us
+os.execute("/home/steve/bin/kb_set")
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
