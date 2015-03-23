@@ -10,6 +10,21 @@ require("naughty")
 -- Load Debian menu entries
 require("debian.menu")
 
+-- From
+-- http://awesome.naquadah.org/wiki/Problems_with_Java
+function delay_raise ()
+   -- 5 ms ages in computer time, but I won't notice it.
+   local raise_timer = timer { timeout = 0.005 }
+   raise_timer:add_signal("timeout",
+             function()
+                if client.focus then
+                   client.focus:raise()
+                end
+                raise_timer:stop()
+   end)
+   raise_timer:start()
+end
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -168,11 +183,11 @@ mytasklist.buttons = awful.util.table.join(
                                           end),
                      awful.button({ }, 4, function ()
                                               awful.client.focus.byidx(1)
-                                              if client.focus then client.focus:raise() end
+                                              delay_raise()
                                           end),
                      awful.button({ }, 5, function ()
                                               awful.client.focus.byidx(-1)
-                                              if client.focus then client.focus:raise() end
+                                              delay_raise()
                                           end))
 hearts = widget({ type = "textbox" })
 hearts.text = ""
@@ -238,12 +253,12 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",
         function ()
             awful.client.focus.byidx( 1)
-            if client.focus then client.focus:raise() end
+            delay_raise()
         end),
     awful.key({ modkey,           }, "b",
         function ()
             awful.client.focus.byidx(-1)
-            if client.focus then client.focus:raise() end
+            delay_raise()
         end),
     awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
 
@@ -256,9 +271,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
+            delay_raise()
         end),
 
     -- Standard program
