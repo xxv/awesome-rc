@@ -10,6 +10,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+local hearts = require("hearts")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -145,6 +146,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
+myhearts = hearts()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -195,14 +197,6 @@ mytasklist.buttons = awful.util.table.join(
                                               awful.client.focus.byidx(-1)
                                               delay_raise()
                                           end))
---hearts = widget({ type = "textbox" })
---hearts.text = ""
---mytimer = timer({ timeout = 10 })
---mytimer:add_signal("timeout", function()
---    awful.util.spawn('/home/steve/bin/awesome-hearts')
---end)
---mytimer:start()
-
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -232,7 +226,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
---    right_layout:add(hearts)
+    right_layout:add(myhearts)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
