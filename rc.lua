@@ -312,8 +312,10 @@ globalkeys = awful.util.table.join(
               end),
 
     awful.key({ modkey }, "Print",              function() awful.util.spawn("c2u-text")         end),
-    awful.key({ modkey, "Control" }, "Print",   function () awful.util.spawn("c2u-screenshot")         end)
+    awful.key({ modkey, "Control" }, "Print",   function () awful.util.spawn("c2u-screenshot")         end),
 
+    awful.key( {}, "XF86ScreenSaver", function() awful.util.spawn("/home/steve/bin/awesome-lock") end),
+    awful.key( {}, "XF86Sleep", function() awful.util.spawn("/home/steve/bin/awesome-sleep") end)
 )
 
 -- Steve's key bindings
@@ -451,6 +453,8 @@ end
 os.execute("wmname LG3D")
 -- Because Gnome stopped doing it for us
 os.execute("/home/steve/bin/kb_set")
+os.execute("xfce4-power-manager")
+os.execute("xfce4-volumed")
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
