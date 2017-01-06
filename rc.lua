@@ -456,12 +456,8 @@ if wid then
           "65535,65535,65535,65535,8670,8670,65535,32385,0,8670,65535,8670")
 end
 
--- Needed for Java, due to really stupid reasons.
-os.execute("wmname LG3D")
 -- Because Gnome stopped doing it for us
-os.execute("/home/steve/bin/kb_set")
-os.execute("xfce4-power-manager")
-os.execute("xfce4-volumed")
+os.execute("/home/steve/bin/awesome-start")
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
