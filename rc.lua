@@ -318,12 +318,8 @@ globalkeys = awful.util.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
 
-
-
-    awful.key({ modkey }, "l",
+    awful.key({ modkey, "Control", "Shift" }, "l",
               function ()
                   awful.prompt.run {
                     prompt       = "Run Lua code: ",
@@ -350,10 +346,10 @@ globalkeys = awful.util.table.join(
     --awful.key({ modkey }, "Print",              function() awful.util.spawn("c2u-text")         end),
     --awful.key({ modkey, "Control" }, "Print",   function () awful.util.spawn("c2u-screenshot")         end),
 
-   -- awful.key( {}, "XF86ScreenSaver", function() awful.util.spawn("/home/steve/bin/awesome-lock") end),
-   -- awful.key( {}, "XF86Sleep", function() awful.util.spawn("/home/steve/bin/awesome-sleep") end)
+   awful.key( {}, "XF86ScreenSaver", function() awful.util.spawn("/home/steve/bin/awesome-lock") end),
+   awful.key( {}, "XF86Sleep", function() awful.util.spawn("/home/steve/bin/awesome-sleep") end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
+    awful.key({ modkey }, "r", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
 )
 
@@ -366,12 +362,10 @@ clientkeys = awful.util.table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ modkey, "Control" }, "x",  awful.client.floating.toggle                     ,
+    awful.key({ modkey, "Control" }, "m",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
---    awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
---              {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "n",
@@ -500,6 +494,7 @@ awful.rules.rules = {
           "MessageWin",  -- kalarm.
           "Sxiv",
           "Wpa_gui",
+	  "bubblefishymon",
           "pinentry",
           "veromix",
           "xtightvncviewer"},
