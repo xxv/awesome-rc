@@ -288,6 +288,12 @@ globalkeys = awful.util.table.join(
               {description = "open a web browser", group = "launcher"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.spawn(gui_file_browser) end,
               {description = "open a file browser", group = "launcher"}),
+    awful.key({ modkey,           }, "XF86Open", function () awful.spawn(terminal) end,
+              {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, "Control" }, "XF86Open", function () awful.spawn(www_browser) end,
+              {description = "open a web browser", group = "launcher"}),
+    awful.key({ modkey, "Shift"   }, "XF86Open", function () awful.spawn(gui_file_browser) end,
+              {description = "open a file browser", group = "launcher"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
